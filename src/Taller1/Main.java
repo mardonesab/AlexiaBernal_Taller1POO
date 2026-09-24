@@ -192,12 +192,16 @@ public class Main
     		{
     			if (nombresSolicitudes[i].equalsIgnoreCase(nombresAlumnos[j]) && apellidosSolicitudes[i].equalsIgnoreCase(apellidosAlumnos[j]))
     			{
-    				nombresAdmitidos[cantidadAdmitidos] = nombresAlumnos[j];
-    				apellidosAdmitidos[cantidadAdmitidos] = apellidosAlumnos[j];
-    				rutAdmitidos[cantidadAdmitidos] = rutAlumnos[j];
-    				paralelosAdmitidos[cantidadAdmitidos] = paralelosAlumnos[j];
+    				if (!yaEstaAdmitido(rutAlumnos[j]))
+    				{
+    					nombresAdmitidos[cantidadAdmitidos] = nombresAlumnos[j];
+    					apellidosAdmitidos[cantidadAdmitidos] = apellidosAlumnos[j];
+    					rutAdmitidos[cantidadAdmitidos] = rutAlumnos[j];
+    					paralelosAdmitidos[cantidadAdmitidos] = paralelosAlumnos[j];
 
-    				cantidadAdmitidos++;
+    					cantidadAdmitidos++;
+    				}
+    					
     				encontrado = true;
     				break;
     			}
@@ -216,6 +220,19 @@ public class Main
     	System.out.println("Rechazados: " + cantidadRechazados);
     }
     
+    //metodo que verifica que un alumno ya esta admitido y permite realizar el filtro automáticoo
+    public static boolean yaEstaAdmitido(String rut)
+    {
+    	for (int i = 0; i < cantidadAdmitidos; i++)
+    	{
+    		if (rutAdmitidos[i].equalsIgnoreCase(rut))
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
     
     
     
