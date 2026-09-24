@@ -5,6 +5,19 @@ import java.util.Scanner;
 public class Main
 {
     static Scanner scanner = new Scanner(System.in);
+    
+    // datos de alumnos
+    static String[] nombresAlumnos = new String[100];
+    static String[] apellidosAlumnos = new String[100];
+    static String[] rutAlumnos = new String[100];
+    static String[] paralelosAlumnos = new String[100];
+    static int cantidadAlumnos = 0;
+
+    // datos de solicitudes
+    static String[] nombresSolicitudes = new String[100];
+    static String[] apellidosSolicitudes = new String[100];
+    static int cantidadSolicitudes = 0;
+
 
     public static void main(String[] args)
     {
