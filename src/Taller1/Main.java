@@ -69,7 +69,7 @@ public class Main
                 break;
 
             case 3:
-                System.out.println("Inscripcion manual al grupo");
+            	inscripcionManualPorNombre();
                 break;
 
             case 4:
@@ -232,6 +232,52 @@ public class Main
     	}
     	
     	return false;
+    }
+    
+    //metodo para inscribir manualmente a una persona por su nombre y apellido
+    public static void inscripcionManualPorNombre()
+    {
+    	System.out.println("Ingrese nombre: ");
+    	String nombre = scanner.nextLine();
+    	
+    	System.out.println("Ingrese apellido: ");
+    	String apellido = scanner.nextLine();
+    	
+    	boolean encontrado = false;
+    	
+    	for (int i = 0; i < cantidadAlumnos; i++)
+    	{
+    		if (nombre.equalsIgnoreCase(nombresAlumnos[i]) && apellido.equalsIgnoreCase(apellidosAlumnos[i]))
+    		{
+    			encontrado = true;
+    			
+    			if (!yaEstaAdmitido(rutAlumnos[i]))
+				{
+					nombresAdmitidos[cantidadAdmitidos] = nombresAlumnos[i];
+					apellidosAdmitidos[cantidadAdmitidos] = apellidosAlumnos[i];
+					rutAdmitidos[cantidadAdmitidos] = rutAlumnos[i];
+					paralelosAdmitidos[cantidadAdmitidos] = paralelosAlumnos[i];
+
+					cantidadAdmitidos++;
+					
+					System.out.println("Alumnos agregado al grupo");
+				} else
+				{
+					System.out.println("El Alumno ya esta en el grupo");
+				}
+    			
+    			break;
+    		}
+    	}
+    	
+    	if (!encontrado)
+    	{
+    		nombresRechazados[cantidadRechazados] = nombre;
+    		apellidosRechazados[cantidadRechazados] = apellido;
+    		cantidadRechazados++;
+    		
+    		System.out.println("La persona no pertenece al curso");
+    	}
     }
     
     
