@@ -1,0 +1,5 @@
+Martin;Droguett;20345678-9;C1
+Luis;Pineda;19876543-2;C2
+Miguel;Perez;20111222-3;C1
+Nicolas;Rojas;20654321-K;C2
+Alejandro;Rabi;19555444-1;C1

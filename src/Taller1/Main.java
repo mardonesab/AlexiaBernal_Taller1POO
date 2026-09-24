@@ -1,5 +1,7 @@
 package Taller1;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main
@@ -47,7 +49,7 @@ public class Main
             switch (opcion)
             {
             case 1:
-                System.out.println("Cargar archivos");
+                cargarAlumnos();
                 break;
 
             case 2:
@@ -98,4 +100,48 @@ public class Main
         System.out.println("6) Analisis estadistico");
         System.out.println("7) Salir");
     }
+    
+    //método para cargar el archivo de Alumnos y almacenar los datos
+    public static void cargarAlumnos()
+    {
+    	
+    	try 
+    	{
+    		File archivo = new File("Alumnos.txt");
+			Scanner lector = new Scanner(archivo);
+			
+			cantidadAlumnos = 0;
+			
+			while (lector.hasNextLine() && cantidadAlumnos < 100)
+			{
+				String linea = lector.nextLine();
+				String[] datos = linea.split(";");
+				
+				nombresAlumnos[cantidadAlumnos] = datos[0];
+				apellidosAlumnos[cantidadAlumnos] = datos[1];
+				rutAlumnos[cantidadAlumnos] = datos[2];
+				paralelosAlumnos[cantidadAlumnos] = datos[3];
+				
+				cantidadAlumnos++;
+				
+			}
+			
+			lector.close();
+			
+			System.out.println("Alumnos cargados: " + cantidadAlumnos);
+			
+		} catch (FileNotFoundException e) 
+    	{
+			System.out.println("Archivo Alumnos.txt no encontrado");
+		}
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
