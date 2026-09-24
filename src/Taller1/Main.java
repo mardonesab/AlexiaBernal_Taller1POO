@@ -19,7 +19,18 @@ public class Main
     static String[] nombresSolicitudes = new String[100];
     static String[] apellidosSolicitudes = new String[100];
     static int cantidadSolicitudes = 0;
-
+    
+    //datos de admitidos
+    static String[] nombresAdmitidos = new String[100];
+    static String[] apellidosAdmitidos = new String[100];
+    static String[] rutAdmitidos = new String[100];
+    static String[] paralelosAdmitidos = new String[100];
+    static int cantidadAdmitidos = 0;
+    
+    //datos de rechazados
+    static String[] nombresRechazados = new String[100];
+    static String[] apellidosRechazados = new String[100];
+    static int cantidadRechazados = 0;
 
     public static void main(String[] args)
     {
@@ -54,7 +65,7 @@ public class Main
                 break;
 
             case 2:
-                System.out.println("Procesar solicitudes");
+                procesarSolicitudes();
                 break;
 
             case 3:
@@ -165,6 +176,44 @@ public class Main
 		} catch (FileNotFoundException e) {
 			System.out.println("Archivo Solicitudes.txt no encontrado");
 		}
+    }
+    
+    //metodo para procesar solicitudes
+    public static void procesarSolicitudes() 
+    {
+    	cantidadAdmitidos = 0;
+    	cantidadRechazados = 0;
+    	
+    	for (int i = 0; i < cantidadSolicitudes; i++)
+    	{
+    		boolean encontrado = false;
+    		
+    		for (int j = 0; j < cantidadAlumnos; j++)
+    		{
+    			if (nombresSolicitudes[i].equalsIgnoreCase(nombresAlumnos[j]) && apellidosSolicitudes[i].equalsIgnoreCase(apellidosAlumnos[j]))
+    			{
+    				nombresAdmitidos[cantidadAdmitidos] = nombresAlumnos[j];
+    				apellidosAdmitidos[cantidadAdmitidos] = apellidosAlumnos[j];
+    				rutAdmitidos[cantidadAdmitidos] = rutAlumnos[j];
+    				paralelosAdmitidos[cantidadAdmitidos] = paralelosAlumnos[j];
+
+    				cantidadAdmitidos++;
+    				encontrado = true;
+    				break;
+    			}
+    		}
+    		
+    		if (!encontrado)
+    		{
+    			nombresRechazados[cantidadRechazados] = nombresSolicitudes[i];
+    			apellidosRechazados[cantidadRechazados] = apellidosSolicitudes[i];
+    			
+    			cantidadRechazados++;
+    		}
+    	}
+    	
+    	System.out.println("Admitidos: " + cantidadAdmitidos);
+    	System.out.println("Rechazados: " + cantidadRechazados);
     }
     
     
