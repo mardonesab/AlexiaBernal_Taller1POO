@@ -50,6 +50,7 @@ public class Main
             {
             case 1:
                 cargarAlumnos();
+                cargarSolicitudes();
                 break;
 
             case 2:
@@ -103,8 +104,7 @@ public class Main
     
     //método para cargar el archivo de Alumnos y almacenar los datos
     public static void cargarAlumnos()
-    {
-    	
+    {    	
     	try 
     	{
     		File archivo = new File("Alumnos.txt");
@@ -122,8 +122,7 @@ public class Main
 				rutAlumnos[cantidadAlumnos] = datos[2];
 				paralelosAlumnos[cantidadAlumnos] = datos[3];
 				
-				cantidadAlumnos++;
-				
+				cantidadAlumnos++;				
 			}
 			
 			lector.close();
@@ -133,6 +132,38 @@ public class Main
 		} catch (FileNotFoundException e) 
     	{
 			System.out.println("Archivo Alumnos.txt no encontrado");
+		}
+    }
+    
+  //método para cargar el archivo de Solicitudes y almacenar los datos
+    public static void cargarSolicitudes()
+    {
+    	
+		try 
+		{
+			File archivo = new File("Solicitudes.txt");
+			Scanner lector = new Scanner(archivo);
+			
+			cantidadSolicitudes = 0;
+			
+			while (lector.hasNextLine() && cantidadSolicitudes < 100)
+			{
+				String linea = lector.nextLine();
+				String[] datos = linea.split("-");
+				
+				nombresSolicitudes[cantidadSolicitudes] = datos[0];
+				apellidosSolicitudes[cantidadSolicitudes] = datos[1];
+				
+				cantidadSolicitudes++;
+			}
+			
+			lector.close();
+			
+			System.out.println("Solicitudes cargadas: " + cantidadSolicitudes);
+			
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("Archivo Solicitudes.txt no encontrado");
 		}
     }
     
