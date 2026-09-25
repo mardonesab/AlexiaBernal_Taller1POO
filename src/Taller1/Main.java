@@ -384,7 +384,7 @@ public class Main
     			break;
     			
     		case 2:
-    			System.out.println("Eliminar alumno");
+    			eliminarAlumno();
     			break;
     		case 3:
     			System.out.println("Inscribir alumno nuevo");
@@ -446,6 +446,62 @@ public class Main
     	if (!encontrado)
     	{
     		System.out.println("Alumno no encontrado");
+    	}
+    }
+    
+    public static void eliminarAlumno()
+    {
+    	System.out.println("Ingrese RUT del alumno (Sin puntos y con guión): ");
+    	String rut = scanner.nextLine();
+    	
+    	boolean encontrado = false;
+    	
+    	for (int i = 0; i < cantidadAlumnos; i++)
+    	{
+    		if (rut.equalsIgnoreCase(rutAlumnos[i]))
+    		{
+    			encontrado = true;
+    			
+    			for (int j = 0; j < cantidadAlumnos; j++)
+    			{
+    				nombresAlumnos[j] = nombresAlumnos[j+1];
+    				apellidosAlumnos[j] = apellidosAlumnos[j+1];
+    				rutAlumnos[j] = apellidosAlumnos[j+1];
+    				paralelosAlumnos[j] = paralelosAlumnos[j+1];
+    			}
+    			
+    			cantidadAlumnos--;
+    			
+    			eliminarAdmitido(rut);
+    			
+    			System.out.println("Alumno eliminado del curso");
+    			break;
+    		}
+    	}
+    	
+    	if (!encontrado)
+    	{
+    		System.out.println("Alumno no encontrado");
+    	}
+    }
+    
+    public static void eliminarAdmitido(String rut)
+    {
+    	for (int i = 0; i < cantidadAlumnos; i++)
+    	{
+    		if (rutAdmitidos[i].equalsIgnoreCase(rut))
+    		{
+    			for (int j = 0; j < cantidadAlumnos; j++)
+    			{
+    				nombresAdmitidos[j] = nombresAdmitidos[j+1];
+    				apellidosAdmitidos[j] = apellidosAdmitidos[j+1];
+    				rutAdmitidos[j] = rutAdmitidos[j+1];
+    				paralelosAdmitidos[j] = paralelosAdmitidos[j+1];
+    			}
+    			
+    			cantidadAdmitidos--;
+    			break;
+    		}
     	}
     }
     
