@@ -1,7 +1,10 @@
 package Taller1;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main
@@ -433,6 +436,8 @@ public class Main
     					}
     				}
     				
+    				guardarAlumnos();
+    				
     				System.out.println("Paralelo actualizado");
     			} else 
     			{
@@ -473,6 +478,8 @@ public class Main
     			cantidadAlumnos--;
     			
     			eliminarAdmitido(rut);
+    			
+    			guardarAlumnos();
     			
     			System.out.println("Alumno eliminado del curso");
     			break;
@@ -547,7 +554,29 @@ public class Main
     	
     	cantidadAlumnos++;
     	
+    	guardarAlumnos();
+    	
     	System.out.println("Alumno inscritio correctamente");
+    }
+    
+    public static void guardarAlumnos()
+    {
+    	try {
+			BufferedWriter escritor = new BufferedWriter(new FileWriter("Alumnos.txt"));
+
+			for (int i = 0; i < cantidadAlumnos; i++)
+			{
+				escritor.write(nombresAlumnos[i] + ";" + apellidosAlumnos[i] + ";" + rutAlumnos[i] + ";" + paralelosAlumnos[i] + ";" );
+				
+				escritor.newLine();
+			}
+			
+			escritor.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error al guardar Alumnos.txt");
+		}
     }
     
  
