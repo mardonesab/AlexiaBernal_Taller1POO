@@ -387,7 +387,7 @@ public class Main
     			eliminarAlumno();
     			break;
     		case 3:
-    			System.out.println("Inscribir alumno nuevo");
+    			inscribirAlumnoNuevo();
     			break;
     		case 4:
     			System.out.println("Volviendo al menu principal");
@@ -503,6 +503,51 @@ public class Main
     			break;
     		}
     	}
+    }
+    
+    public static void inscribirAlumnoNuevo()
+    {
+    	if (cantidadAlumnos >= 100)
+    	{
+    		System.out.println("No se pueden agregar mas alumnos");
+    		return;
+    	}
+    	
+    	System.out.println("Ingrese nombre: ");
+    	String nombre = scanner.nextLine();
+    	
+    	System.out.println("Ingrese apellido: ");
+    	String apellido = scanner.nextLine();
+    	
+    	System.out.println("Ingrese rut (Sin puntos y con guión): ");
+    	String rut = scanner.nextLine();
+    	
+    	for (int i = 0; i < cantidadAlumnos; i++)
+    	{
+    		if (rut.equalsIgnoreCase(rutAlumnos[i]))
+    		{
+    			System.out.println("El RUT ya se encuentra registrado");
+    			return;
+    		}
+    	}
+    	
+    	System.out.println("Ingrese paralelo (C1/C2): ");
+    	String paralelo = scanner.nextLine();
+    	
+    	if (!paralelo.equalsIgnoreCase("C1") && !paralelo.equalsIgnoreCase("C2"))
+    	{
+    		System.out.println("Paralelo invalido");
+    		return;
+    	}
+    	
+    	nombresAlumnos[cantidadAlumnos] = nombre;
+    	apellidosAlumnos[cantidadAlumnos] = apellido;
+    	rutAlumnos[cantidadAlumnos] = rut;
+    	paralelosAlumnos[cantidadAlumnos] = paralelo.toUpperCase();
+    	
+    	cantidadAlumnos++;
+    	
+    	System.out.println("Alumno inscritio correctamente");
     }
     
  
