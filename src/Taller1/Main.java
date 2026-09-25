@@ -34,6 +34,7 @@ public class Main
     static String[] nombresRechazados = new String[100];
     static String[] apellidosRechazados = new String[100];
     static int cantidadRechazados = 0;
+    static String[] rutRechazados = new String[100];
 
     public static void main(String[] args)
     {
@@ -80,7 +81,7 @@ public class Main
                 break;
 
             case 5:
-                System.out.println("Generar reportes");
+                generarReportes();
                 break;
 
             case 6:
@@ -577,6 +578,49 @@ public class Main
 			// TODO Auto-generated catch block
 			System.out.println("Error al guardar Alumnos.txt");
 		}
+    }
+    
+    public static void generarReportes()
+    {
+    	 try {
+			BufferedWriter admitidos = new BufferedWriter(new FileWriter("Admitidos.txt"));
+			
+			for (int i = 0; i < cantidadAdmitidos; i++)
+			{
+				admitidos.write(nombresAdmitidos[i] + ";" + apellidosAdmitidos[i] + ";" + rutAdmitidos[i] + ";" + paralelosAdmitidos[i] + ";");
+				
+				admitidos.newLine();
+			}
+			
+			admitidos.close();
+			
+			BufferedWriter rechazados = new BufferedWriter(new FileWriter("Rechazados.txt"));
+			
+			for (int i = 0; i < cantidadRechazados; i++)
+			{
+				if (rutRechazados[i] != null)
+				{
+					rechazados.write("Sin nombre registrado, RUT: " + rutRechazados[i]);
+				}
+				else
+				{
+					rechazados.write(nombresRechazados[i] + " " + apellidosRechazados[i] + " - No pertenece a ningun paralelo del curso");
+				}
+				
+				rechazados.newLine();
+			}
+			
+			rechazados.close();
+			
+			System.out.println("Reportes generados con exito");
+			
+			
+			
+			
+		 } catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error al generar los reportes");
+		 }
     }
     
  
