@@ -69,7 +69,7 @@ public class Main
                 break;
 
             case 3:
-            	inscripcionManualPorNombre();
+            	menuInscripcionManual();
                 break;
 
             case 4:
@@ -279,6 +279,80 @@ public class Main
     		System.out.println("La persona no pertenece al curso");
     	}
     }
+    
+  //metodo para inscribir manualmente a una persona por su rut
+    public static void inscripcionManualPorRut()
+    {
+    	System.out.println("Ingrese RUT (Sin puntos y con guión): ");
+    	String rut = scanner.nextLine();
+    	
+    	boolean encontrado = false;
+    	
+    	for (int i = 0; i < cantidadAlumnos; i++)
+    	{
+    		if (rut.equalsIgnoreCase(rutAlumnos[i]))
+    		{
+    			encontrado = true;
+    			
+    			if (!yaEstaAdmitido(rutAlumnos[i]))
+    			{
+    				nombresAdmitidos[cantidadAdmitidos] = nombresAlumnos[i];
+					apellidosAdmitidos[cantidadAdmitidos] = apellidosAlumnos[i];
+					rutAdmitidos[cantidadAdmitidos] = rutAlumnos[i];
+					paralelosAdmitidos[cantidadAdmitidos] = paralelosAlumnos[i];
+
+					cantidadAdmitidos++;
+					
+					System.out.println("Alumnos agregado al grupo");
+    			} else
+    			{
+    				System.out.println("El Alumno ya esta en el grupo");
+    			}
+    			break;
+    		}   		
+    	}
+    	
+    	if (!encontrado)
+    	{
+    		System.out.println("No se encontro un alumno con ese Rut");
+    	}
+    
+    }
+    
+    //sub menu opcion 3 menu principal, llama al metodo dependiendo del tipo de busqueda
+    public static void menuInscripcionManual()
+    {
+    	int opcion;
+    	
+    	System.out.println("1) Buscar por nombre y apellido");
+    	System.out.println("2) Buscar por RUT");
+    	System.out.println("Ingrese opcion: ");
+    	
+    	if (scanner.hasNextLine())
+    	{
+    		opcion = scanner.nextInt();
+    		scanner.nextLine();
+    		
+    		if (opcion == 1)
+    		{
+    			inscripcionManualPorNombre();
+    		}
+    		else if (opcion == 2)
+    		{
+    			inscripcionManualPorRut();
+    		}
+    		else
+    		{
+    			System.out.println("Opcion invalida");
+    		}
+    	}
+    	else
+    	{
+    		scanner.nextLine();
+    		System.out.println("Opcion invalida");
+    	}
+    }
+    
     
     
     
