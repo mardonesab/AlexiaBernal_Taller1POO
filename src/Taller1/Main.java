@@ -380,17 +380,18 @@ public class Main
     		switch (opcion)
     		{
     		case 1:
-    			System.out.println("Cambiar paralelo");
+    			cambiarParalelo();
+    			break;
     			
     		case 2:
     			System.out.println("Eliminar alumno");
-    			
+    			break;
     		case 3:
     			System.out.println("Inscribir alumno nuevo");
-    			
+    			break;
     		case 4:
     			System.out.println("Volviendo al menu principal");
-    			
+    			break;
     		default:
     			System.out.println("Opcion invalida");
     		}
@@ -398,6 +399,54 @@ public class Main
     		System.out.println();
     		
     	} while (opcion != 4);
+    }
+    
+    public static void cambiarParalelo()
+    {
+    	System.out.println("Ingrese RUT del alumno (Sin puntos y con guión): ");
+    	String rut = scanner.nextLine();
+    	
+    	boolean encontrado = false;
+    	
+    	for (int i = 0; i < cantidadAlumnos; i++)
+    	{
+    		if (rut.equalsIgnoreCase(rutAlumnos[i]))
+    		{
+    			encontrado = true;
+    			
+    			System.out.println("Alumno: " + nombresAlumnos[i] + " " + apellidosAlumnos[i]);
+    			System.out.println("Paralelo actual: " + paralelosAlumnos[i]);
+    			System.out.println("Ingrese nuevo paralelo (C1/C2): ");
+    			
+    			String nuevoParalelo = scanner.nextLine();
+    			
+    			if (nuevoParalelo.equalsIgnoreCase("C1") || nuevoParalelo.equalsIgnoreCase("C2"))
+    			{
+    				paralelosAlumnos[i] = nuevoParalelo.toUpperCase();
+    				
+    				for (int j = 0; j < cantidadAdmitidos; j++)
+    				{
+    					if (rutAdmitidos[j].equalsIgnoreCase(rut))
+    					{
+    						paralelosAdmitidos[j] = nuevoParalelo.toUpperCase();
+    						break;
+    					}
+    				}
+    				
+    				System.out.println("Paralelo actualizado");
+    			} else 
+    			{
+    				System.out.println("Paralelo invalido");
+    			}
+    			
+    			break;
+    		}
+    	}
+    	
+    	if (!encontrado)
+    	{
+    		System.out.println("Alumno no encontrado");
+    	}
     }
     
  
