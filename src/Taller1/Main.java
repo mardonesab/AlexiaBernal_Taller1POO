@@ -35,6 +35,9 @@ public class Main
     static String[] apellidosRechazados = new String[100];
     static int cantidadRechazados = 0;
     static String[] rutRechazados = new String[100];
+    
+    
+    static int numeroReporte = 1;
 
     public static void main(String[] args)
     {
@@ -583,7 +586,7 @@ public class Main
     public static void generarReportes()
     {
     	 try {
-			BufferedWriter admitidos = new BufferedWriter(new FileWriter("Admitidos.txt"));
+			BufferedWriter admitidos = new BufferedWriter(new FileWriter("Admitidos_" + numeroReporte +  ".txt"));
 			
 			for (int i = 0; i < cantidadAdmitidos; i++)
 			{
@@ -594,7 +597,7 @@ public class Main
 			
 			admitidos.close();
 			
-			BufferedWriter rechazados = new BufferedWriter(new FileWriter("Rechazados.txt"));
+			BufferedWriter rechazados = new BufferedWriter(new FileWriter("Rechazados_" + numeroReporte +  ".txt"));
 			
 			for (int i = 0; i < cantidadRechazados; i++)
 			{
@@ -615,7 +618,7 @@ public class Main
 			System.out.println("Reportes generados con exito");
 			
 			
-			
+			numeroReporte++;
 			
 		 } catch (IOException e) {
 			// TODO Auto-generated catch block
