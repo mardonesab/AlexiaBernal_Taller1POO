@@ -73,7 +73,7 @@ public class Main
                 break;
 
             case 4:
-                System.out.println("Administracion del curso");
+                menuAdministracion();
                 break;
 
             case 5:
@@ -352,6 +352,56 @@ public class Main
     		System.out.println("Opcion invalida");
     	}
     }
+    
+    public static void menuAdministracion()
+    {
+    	int opcion = 0;
+    	
+    	do
+    	{
+    		System.out.println("---Administracion del curso---");
+    		System.out.println("1) Cambiar paralelo de un alumno");
+    		System.out.println("2) Eliminar alumno del curso");
+    		System.out.println("3) inscribir alumno nuevo");
+    		System.out.println("4) Volver");
+    		System.out.println("Ingrese opcion: ");
+    		
+    		if (scanner.hasNextInt())
+    		{
+    			opcion = scanner.nextInt();
+    			scanner.nextLine();
+    		}
+    		else
+    		{
+    			scanner.nextLine();
+    			opcion = 0;
+    		}
+    		
+    		switch (opcion)
+    		{
+    		case 1:
+    			System.out.println("Cambiar paralelo");
+    			
+    		case 2:
+    			System.out.println("Eliminar alumno");
+    			
+    		case 3:
+    			System.out.println("Inscribir alumno nuevo");
+    			
+    		case 4:
+    			System.out.println("Volviendo al menu principal");
+    			
+    		default:
+    			System.out.println("Opcion invalida");
+    		}
+    		
+    		System.out.println();
+    		
+    	} while (opcion != 4);
+    }
+    
+ 
+    
     
     
     
