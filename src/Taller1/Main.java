@@ -88,7 +88,7 @@ public class Main
                 break;
 
             case 6:
-                System.out.println("Analisis estadistico");
+                analisisEstadistico();
                 break;
 
             case 7:
@@ -627,7 +627,43 @@ public class Main
     }
     
  
-    
+    public static void analisisEstadistico()
+    {
+    	int totalIntentos = cantidadAdmitidos + cantidadRechazados;
+    	
+    	if (totalIntentos == 0)
+    	{
+    		System.out.println("No hay datos para realizar el analisis");
+    		return;
+    	}
+    	
+    	double porcentajeRechazo = (cantidadRechazados * 100) / totalIntentos;
+    	
+    	double tasaAdmision = (cantidadAdmitidos * 100) / totalIntentos;
+    	
+    	int admitidosC1 = 0;
+    	int admitidosC2 = 0;
+    	
+    	for (int i = 0; i < cantidadAdmitidos; i++)
+    	{
+    		if (paralelosAdmitidos[i].equalsIgnoreCase("C1"))
+    		{
+    			admitidosC1++;
+    		}
+    		else if (paralelosAdmitidos[i].equalsIgnoreCase("C2"))
+    		{
+    			admitidosC2++;
+    		}
+    	}
+    	
+    	System.out.println("---Analisis Estadistico---");
+    	System.out.println("Total de intentos de ingreso: " + totalIntentos);
+    	System.out.println("Rechazados: " + cantidadRechazados + " (" + porcentajeRechazo + "%)");
+    	System.out.println("Admitidos por paralelo:");
+    	System.out.println("- C1: " + admitidosC1);
+    	System.out.println("- C2: " + admitidosC2);
+    	System.out.println("Tasa de admision: " + tasaAdmision + "%");
+    }
     
     
     
