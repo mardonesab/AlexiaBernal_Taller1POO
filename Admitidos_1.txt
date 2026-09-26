@@ -1,3 +1,0 @@
-Martin;Droguett;20345678-9;C2;
-Miguel;Perez;20111222-3;C1;
-Nicolas;Rojas;20654321-K;C2;

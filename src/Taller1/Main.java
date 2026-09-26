@@ -1,3 +1,5 @@
+// Alexia Bernal - 21.505.877-8- ICCI
+
 package Taller1;
 
 import java.io.BufferedWriter;
@@ -37,7 +39,13 @@ public class Main
     static String[] rutRechazados = new String[100];
     
     
-    static int numeroReporte = 1;
+    static int versionC1 = 1;
+    static int versionC2 = 1;
+    static int versionRechazados = 1;
+    
+    static boolean archivosCargados = false;
+    
+    static int intentosManuales = 0;
 
     public static void main(String[] args)
     {
@@ -67,28 +75,82 @@ public class Main
             switch (opcion)
             {
             case 1:
-                cargarAlumnos();
-                cargarSolicitudes();
+                boolean alumnosCargados = cargarAlumnos();
+                boolean solicitudesCargados = cargarSolicitudes();
+                
+                archivosCargados = alumnosCargados && solicitudesCargados;
+                
+                if (!archivosCargados)
+                {
+                	System.out.println("No se pudieron cargar todos los archivos");
+                }
+                
+                
                 break;
 
             case 2:
-                procesarSolicitudes();
+                
+            	if (!archivosCargados)
+            	{
+            		System.out.println("Primero debe cargar los archivos");
+            	}
+            	else 
+            	{
+            		procesarSolicitudes();
+            	}
+            	
                 break;
 
             case 3:
-            	menuInscripcionManual();
+            	
+            	if (!archivosCargados)
+            	{
+            		System.out.println("Primero debe cargar los archivos");
+            	}
+            	else 
+            	{
+            		menuInscripcionManual();
+            	}
+            	
                 break;
 
             case 4:
-                menuAdministracion();
+            	
+            	if (!archivosCargados)
+            	{
+            		System.out.println("Primero debe cargar los archivos");
+            	}
+            	else 
+            	{
+            		menuAdministracion();
+            	}
+            	                
                 break;
 
             case 5:
-                generarReportes();
+            	
+            	if (!archivosCargados)
+            	{
+            		System.out.println("Primero debe cargar los archivos");
+            	}
+            	else 
+            	{
+            		menuReportes();
+            	}
+            	                
                 break;
 
             case 6:
-                analisisEstadistico();
+            	
+            	if (!archivosCargados)
+            	{
+            		System.out.println("Primero debe cargar los archivos");
+            	}
+            	else 
+            	{
+            		analisisEstadistico();
+            	}
+                
                 break;
 
             case 7:
@@ -121,7 +183,7 @@ public class Main
     }
     
     //método para cargar el archivo de Alumnos y almacenar los datos
-    public static void cargarAlumnos()
+    public static boolean cargarAlumnos()
     {    	
     	try 
     	{
@@ -135,26 +197,39 @@ public class Main
 				String linea = lector.nextLine();
 				String[] datos = linea.split(";");
 				
-				nombresAlumnos[cantidadAlumnos] = datos[0];
-				apellidosAlumnos[cantidadAlumnos] = datos[1];
-				rutAlumnos[cantidadAlumnos] = datos[2];
-				paralelosAlumnos[cantidadAlumnos] = datos[3];
+				if (datos.length == 4)
+				{
+					nombresAlumnos[cantidadAlumnos] = datos[0].trim();
+					apellidosAlumnos[cantidadAlumnos] = datos[1].trim();
+					rutAlumnos[cantidadAlumnos] = datos[2].trim();
+					paralelosAlumnos[cantidadAlumnos] = datos[3].trim();
 				
-				cantidadAlumnos++;				
+					cantidadAlumnos++;
+				}
+				
+				else
+				{
+					System.out.println("Linea invalida en Alumnos.txt: " + linea);
+				}
+				
+								
 			}
 			
 			lector.close();
 			
 			System.out.println("Alumnos cargados: " + cantidadAlumnos);
 			
+			return true;
+			
 		} catch (FileNotFoundException e) 
     	{
 			System.out.println("Archivo Alumnos.txt no encontrado");
+			return false;
 		}
     }
     
   //método para cargar el archivo de Solicitudes y almacenar los datos
-    public static void cargarSolicitudes()
+    public static boolean cargarSolicitudes()
     {
     	
 		try 
@@ -169,19 +244,32 @@ public class Main
 				String linea = lector.nextLine();
 				String[] datos = linea.split("-");
 				
-				nombresSolicitudes[cantidadSolicitudes] = datos[0];
-				apellidosSolicitudes[cantidadSolicitudes] = datos[1];
+				if (datos.length == 2)
+				{
+					nombresSolicitudes[cantidadSolicitudes] = datos[0].trim();
+					apellidosSolicitudes[cantidadSolicitudes] = datos[1].trim();
 				
-				cantidadSolicitudes++;
+					cantidadSolicitudes++;
+				}
+				else
+				{
+					System.out.println("Linea invalida en Solicitudes.txt: " + linea);
+				}
+				
+				
 			}
 			
 			lector.close();
 			
 			System.out.println("Solicitudes cargadas: " + cantidadSolicitudes);
 			
+			return true;
+			
 			
 		} catch (FileNotFoundException e) {
 			System.out.println("Archivo Solicitudes.txt no encontrado");
+			
+			return false;
 		}
     }
     
@@ -218,6 +306,7 @@ public class Main
     		{
     			nombresRechazados[cantidadRechazados] = nombresSolicitudes[i];
     			apellidosRechazados[cantidadRechazados] = apellidosSolicitudes[i];
+    			rutRechazados[cantidadRechazados] = null;
     			
     			cantidadRechazados++;
     		}
@@ -244,6 +333,8 @@ public class Main
     //metodo para inscribir manualmente a una persona por su nombre y apellido
     public static void inscripcionManualPorNombre()
     {
+    	intentosManuales++;
+    	
     	System.out.println("Ingrese nombre: ");
     	String nombre = scanner.nextLine();
     	
@@ -290,6 +381,8 @@ public class Main
   //metodo para inscribir manualmente a una persona por su rut
     public static void inscripcionManualPorRut()
     {
+    	intentosManuales++;
+    	
     	System.out.println("Ingrese RUT (Sin puntos y con guión): ");
     	String rut = scanner.nextLine();
     	
@@ -321,7 +414,13 @@ public class Main
     	
     	if (!encontrado)
     	{
-    		System.out.println("No se encontro un alumno con ese Rut");
+    		nombresRechazados[cantidadRechazados] = "Sin nombre registrado";
+    		apellidosRechazados[cantidadRechazados] = "";
+    		rutRechazados[cantidadRechazados] = rut;
+    		
+    		cantidadRechazados++;
+    		
+    		System.out.println("El RUT no pertenece a ningun paralelo del curso");
     	}
     
     }
@@ -335,7 +434,7 @@ public class Main
     	System.out.println("2) Buscar por RUT");
     	System.out.println("Ingrese opcion: ");
     	
-    	if (scanner.hasNextLine())
+    	if (scanner.hasNextInt())
     	{
     		opcion = scanner.nextInt();
     		scanner.nextLine();
@@ -471,11 +570,11 @@ public class Main
     		{
     			encontrado = true;
     			
-    			for (int j = 0; j < cantidadAlumnos; j++)
+    			for (int j = i; j < cantidadAlumnos - 1; j++)
     			{
     				nombresAlumnos[j] = nombresAlumnos[j+1];
     				apellidosAlumnos[j] = apellidosAlumnos[j+1];
-    				rutAlumnos[j] = apellidosAlumnos[j+1];
+    				rutAlumnos[j] = rutAlumnos[j+1];
     				paralelosAlumnos[j] = paralelosAlumnos[j+1];
     			}
     			
@@ -498,11 +597,11 @@ public class Main
     
     public static void eliminarAdmitido(String rut)
     {
-    	for (int i = 0; i < cantidadAlumnos; i++)
+    	for (int i = 0; i < cantidadAdmitidos; i++)
     	{
     		if (rutAdmitidos[i].equalsIgnoreCase(rut))
     		{
-    			for (int j = 0; j < cantidadAlumnos; j++)
+    			for (int j = i; j < cantidadAdmitidos - 1; j++)
     			{
     				nombresAdmitidos[j] = nombresAdmitidos[j+1];
     				apellidosAdmitidos[j] = apellidosAdmitidos[j+1];
@@ -532,6 +631,17 @@ public class Main
     	
     	System.out.println("Ingrese rut (Sin puntos y con guión): ");
     	String rut = scanner.nextLine();
+    	
+    	if (nombre.trim().isEmpty() || apellido.trim().isEmpty() || rut.trim().isEmpty())
+    	{
+    		System.out.println("Los datos no pueden quedar vacios");
+    		return;
+    	}
+    	
+    	nombre = nombre.trim();
+    	apellido = apellido.trim();
+    	rut = rut.trim();
+    	
     	
     	for (int i = 0; i < cantidadAlumnos; i++)
     	{
@@ -570,7 +680,7 @@ public class Main
 
 			for (int i = 0; i < cantidadAlumnos; i++)
 			{
-				escritor.write(nombresAlumnos[i] + ";" + apellidosAlumnos[i] + ";" + rutAlumnos[i] + ";" + paralelosAlumnos[i] + ";" );
+				escritor.write(nombresAlumnos[i] + ";" + apellidosAlumnos[i] + ";" + rutAlumnos[i] + ";" + paralelosAlumnos[i]);
 				
 				escritor.newLine();
 			}
@@ -583,53 +693,150 @@ public class Main
 		}
     }
     
-    public static void generarReportes()
+
+    
+    public static void menuReportes()
     {
-    	 try {
-			BufferedWriter admitidos = new BufferedWriter(new FileWriter("Admitidos_" + numeroReporte +  ".txt"));
+    	int opcion;
+    	
+    	System.out.println("---Generar reportes---");
+    	System.out.println("1) Reporte paralelo C1");
+    	System.out.println("2) Reporte paralelo C2");
+    	System.out.println("3) Reporte de rechazados");
+    	System.out.println("4) volver");
+    	System.out.println("Ingrese opcion: ");
+    	
+    	if (scanner.hasNextInt())
+    	{
+    		opcion = scanner.nextInt();
+    		scanner.nextLine();
+    		
+    		switch (opcion)
+    		{
+    		case 1:
+    			generarReporteC1();
+    			break;
+    			
+    		case 2:
+    			generarReporteC2();
+    			break;
+    			
+    		case 3:
+    			generarReporteRechazados();
+    			break;
+    			
+    		case 4:
+    			break;
+    			
+    		default:
+    			System.out.println("Opcion invalida");
+    		}
+    	}
+    	
+    	else
+    	{
+    		scanner.nextLine();
+    		System.out.println("Opcion invalida");
+    	}
+    }
+    
+    public static void generarReporteC1()
+    {
+    	BufferedWriter escritor;
+		try {
+			escritor = new BufferedWriter(new FileWriter("ReporteC1-V" + versionC1 + ".txt"));
+			
+			escritor.write("=== Miembros del grupo - Paralelo C1 ===");
+			escritor.newLine();
 			
 			for (int i = 0; i < cantidadAdmitidos; i++)
 			{
-				admitidos.write(nombresAdmitidos[i] + ";" + apellidosAdmitidos[i] + ";" + rutAdmitidos[i] + ";" + paralelosAdmitidos[i] + ";");
-				
-				admitidos.newLine();
+				if (paralelosAdmitidos[i].equalsIgnoreCase("C1"))
+				{
+					escritor.write(nombresAdmitidos[i] + " " + apellidosAdmitidos[i] + " - " + rutAdmitidos[i]);
+					
+					escritor.newLine();
+				}
 			}
 			
-			admitidos.close();
+			escritor.close();
 			
-			BufferedWriter rechazados = new BufferedWriter(new FileWriter("Rechazados_" + numeroReporte +  ".txt"));
+			System.out.println("Reporte C1 generado");
+			versionC1++;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error al generar el reporte C1");
+		}    	
+    }
+    
+    public static void generarReporteC2()
+    {
+    	BufferedWriter escritor;
+		try {
+			escritor = new BufferedWriter(new FileWriter("ReporteC2-V" + versionC2 + ".txt"));
+			
+			escritor.write("=== Miembros del grupo - Paralelo C2 ===");
+			escritor.newLine();
+			
+			for (int i = 0; i < cantidadAdmitidos; i++)
+			{
+				if (paralelosAdmitidos[i].equalsIgnoreCase("C2"))
+				{
+					escritor.write(nombresAdmitidos[i] + " " + apellidosAdmitidos[i] + " - " + rutAdmitidos[i]);
+					
+					escritor.newLine();
+				}
+			}
+			
+			escritor.close();
+			
+			System.out.println("Reporte C2 generado");
+			versionC2++;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error al generar el reporte C2");
+		}   	
+    }
+    
+    public static void generarReporteRechazados()
+    {
+    	BufferedWriter escritor;
+		try {
+			escritor = new BufferedWriter(new FileWriter("Rechazados-V" + versionRechazados + ".txt"));			
 			
 			for (int i = 0; i < cantidadRechazados; i++)
 			{
 				if (rutRechazados[i] != null)
 				{
-					rechazados.write("Sin nombre registrado, RUT: " + rutRechazados[i]);
+					escritor.write("Sin nombre registrado, RUT: " + rutRechazados[i]);
 				}
 				else
 				{
-					rechazados.write(nombresRechazados[i] + " " + apellidosRechazados[i] + " - No pertenece a ningun paralelo del curso");
+					escritor.write(nombresRechazados[i] + " " + apellidosRechazados[i] + " - No pertenece a ningun paralelo del curso");
 				}
 				
-				rechazados.newLine();
+				escritor.newLine();
 			}
 			
-			rechazados.close();
+			escritor.close();
 			
-			System.out.println("Reportes generados con exito");
+			System.out.println("Reporte de rechazados generado");
+			versionRechazados++;
 			
-			
-			numeroReporte++;
-			
-		 } catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error al generar los reportes");
-		 }
+			System.out.println("Error al generar el reporte de rechazados");
+		}
+    	
+    	
     }
     
  
     public static void analisisEstadistico()
     {
-    	int totalIntentos = cantidadAdmitidos + cantidadRechazados;
+    	int totalIntentos = cantidadSolicitudes + intentosManuales;
     	
     	if (totalIntentos == 0)
     	{
@@ -637,9 +844,9 @@ public class Main
     		return;
     	}
     	
-    	double porcentajeRechazo = (cantidadRechazados * 100) / totalIntentos;
+    	double porcentajeRechazo = (cantidadRechazados * 100.0) / totalIntentos;
     	
-    	double tasaAdmision = (cantidadAdmitidos * 100) / totalIntentos;
+    	double tasaAdmision = (cantidadAdmitidos * 100.0) / totalIntentos;
     	
     	int admitidosC1 = 0;
     	int admitidosC2 = 0;
